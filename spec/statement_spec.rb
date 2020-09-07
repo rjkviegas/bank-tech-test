@@ -24,22 +24,26 @@ describe Statement do
         :type => 'credit', 
         :date => '20/01/2020', 
         :amount => 500, 
-        :balance => 500
+        :balance => 500,
       )
       debit_trans_double = double(
         'transaction', 
         :type => 'debit', 
         :date => '21/01/2020', 
         :amount => 200, 
-        :balance => 300
+        :balance => 300,
+        :credit? => true
       )
       statement = Statement.new
       statement.add(credit_trans_double)
+      allow(credit_trans_double).to receive(:credit?) { true }
       expect{ statement.show }.to output(
         "date || credit || debit || balance\n" +
         "20/01/2020 || 500 || || 500\n"
       ).to_stdout
       statement.add(debit_trans_double)
+      allow(debit_trans_double).to receive(:credit?) { false }
+      allow(debit_trans_double).to receive(:debit?) { true }
       expect{ statement.show }.to output(
         "date || credit || debit || balance\n" +
         "21/01/2020 || || 200 || 300\n" +

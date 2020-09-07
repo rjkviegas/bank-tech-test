@@ -17,9 +17,9 @@ class Statement
   private
 
   def stringify(tr)
-    if tr.type == 'credit'
+    if tr.credit?
       "#{tr.date} || #{tr.amount} || || #{tr.balance}"
-    elsif tr.type == 'debit'
+    elsif tr.debit?
       "#{tr.date} || || #{tr.amount} || #{tr.balance}"
     end
   end

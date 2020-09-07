@@ -7,4 +7,14 @@ class Transaction
     @amount = amount
     @balance = balance
   end
+
+  private
+
+  def credit?
+    type == 'credit' ? true : false
+  end
+
+  def debit?
+    type == 'debit' ? true : false
+  end
 end
