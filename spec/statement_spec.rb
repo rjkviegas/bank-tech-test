@@ -4,24 +4,47 @@ describe Statement do
   describe '#initialize' do
     it '#transactions' do
       statement = Statement.new
-      expect(statement).to have_attributes(:transactions => ['date || credit || debit || balance']) 
+      expect(statement).to have_attributes(:transactions => []) 
     end
   end
   describe '#add' do
     it 'string to transactions array' do
       statement = Statement.new
+      transaction_double = double('transaction')
+      expect(statement.transactions.length).to eq(0)
+      statement.add(transaction_double)
       expect(statement.transactions.length).to eq(1)
-      statement.add('transaction')
-      expect(statement.transactions.length).to eq(2)
-      expect(statement.transactions[1]).to eq('transaction')
+      expect(statement.transactions[0]).to eq(transaction_double)
     end
   end
   describe '#print' do
-    it 'all transactions' do
+    it 'all transactions in reverse chronological order' do
+      credit_trans_double = double(
+        'transaction', 
+        :type => 'credit', 
+        :date => '20/01/2020', 
+        :amount => 500, 
+        :balance => 500
+      )
+      debit_trans_double = double(
+        'transaction', 
+        :type => 'debit', 
+        :date => '21/01/2020', 
+        :amount => 200, 
+        :balance => 300
+      )
       statement = Statement.new
-      statement.add('20/01/2020 || 500.00 || || 500.00')
-      expect{ statement.print }.to output.to_stdout
-      expect{ statement.print }.to output(puts statement.transactions).to_stdout
+      statement.add(credit_trans_double)
+      expect{ statement.show }.to output(
+        "date || credit || debit || balance\n" +
+        "20/01/2020 || 500 || || 500\n"
+      ).to_stdout
+      statement.add(debit_trans_double)
+      expect{ statement.show }.to output(
+        "date || credit || debit || balance\n" +
+        "21/01/2020 || || 200 || 300\n" +
+        "20/01/2020 || 500 || || 500\n"
+      ).to_stdout
     end
   end
 end

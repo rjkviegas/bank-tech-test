@@ -1,11 +1,10 @@
 class Transaction
-  attr_reader :string
+  attr_reader :type, :date, :amount, :balance
 
-  def initialize(date, type, amount, balance)
-    if type === 'credit'
-      @string = "#{date} || #{amount}.00 || || #{balance}.00"
-    elsif type === 'debit'
-      @string = "#{date} || || #{amount}.00 || #{balance}.00"
-    end
+  def initialize(type, date, amount, balance)
+    @type = type
+    @date = date
+    @amount = amount
+    @balance = balance
   end
 end

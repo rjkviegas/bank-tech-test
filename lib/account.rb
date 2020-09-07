@@ -12,13 +12,19 @@ class Account
 
   def deposit(date, amount)
     @balance += amount
-    credit_transaction = @transaction_class.new(date, 'credit', amount, "#{balance}")
-    statement.add(credit_transaction.string)
+    credit_transaction = @transaction_class.new('credit', date, amount, "#{balance}")
+    save(credit_transaction)
   end
 
   def withdrawal(date, amount)
     @balance -= amount
-    debit_transaction = @transaction_class.new(date, 'debit', amount, "#{balance}")
-    @statement.add(debit_transaction.string)
+    debit_transaction = @transaction_class.new('debit', date, amount, "#{balance}")
+    save(debit_transaction)
+  end
+
+  private
+
+  def save(transaction)
+    statement.add(transaction)
   end
 end
