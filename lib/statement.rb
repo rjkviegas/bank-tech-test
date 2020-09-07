@@ -8,4 +8,8 @@ class Statement
   def add(transaction)
     transactions << transaction
   end
+
+  def print
+    puts @transactions
+  end
 end

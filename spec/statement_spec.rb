@@ -16,4 +16,12 @@ describe Statement do
       expect(statement.transactions[1]).to eq('transaction')
     end
   end
+  describe '#print' do
+    it 'all transactions' do
+      statement = Statement.new
+      statement.add('20/01/2020 || 500.00 || || 500.00')
+      expect{ statement.print }.to output.to_stdout
+      expect{ statement.print }.to output(puts statement.transactions).to_stdout
+    end
+  end
 end
