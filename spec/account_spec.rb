@@ -18,4 +18,17 @@ describe Account do
       expect(account.statement.transactions).to eq(['date || credit || debit || balance', '20/01/2020 || 500.00 || || 500.00'])
     end
   end
+
+  describe '#withdrawal' do
+    let(:account) { Account.new(Statement, Transaction) }
+    it 'subtracts amount from balance' do
+      expect(account.balance).to eq (0)
+      account.withdrawal('21/01/2020', 500)
+      expect(account.balance).to eq(-500)
+    end
+    it 'adds a debit transaction to the account statement' do 
+      account.withdrawal('21/01/2020', 500)
+      expect(account.statement.transactions).to eq(['date || credit || debit || balance', '21/01/2020 || || 500.00 || -500.00'])
+    end
+  end
 end

@@ -15,4 +15,10 @@ class Account
     credit_transaction = @transaction_class.new(date, 'credit', amount, "#{balance}")
     @statement.transactions.push(credit_transaction.string)
   end
+
+  def withdrawal(date, amount)
+    @balance -= amount
+    debit_transaction = @transaction_class.new(date, 'debit', amount, "#{balance}")
+    @statement.transactions.push(debit_transaction.string)
+  end
 end
