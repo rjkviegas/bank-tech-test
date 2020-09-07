@@ -7,8 +7,9 @@ describe Account do
   end
 
   describe '#deposit' do
+    let(:statement_double) { double('statement_double', new: nil) }
+    let(:account) { Account.new(statement_double)}
     it 'adds amount to balance' do
-      account = Account.new(Statement)
       account.deposit(500)
       expect(account.balance).to eq(500)
     end
