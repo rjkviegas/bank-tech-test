@@ -18,7 +18,7 @@ describe 'Feature Tests' do
       expect { account.deposit('20-01-2020', 500) }.to change { account.statement.transactions.length }.by 1
       expect(account.statement.transactions).to include(a_kind_of(Transaction))
       expect(account.statement.transactions[0].type).to eq('credit')
-      expect(account.statement.transactions[0].date).to eq('20/01/2020')
+      expect(account.statement.transactions[0].date).to eq('20-01-2020')
       expect(account.statement.transactions[0].amount).to eq(500)
     end
   end
@@ -33,7 +33,7 @@ describe 'Feature Tests' do
       expect { account.deposit('20-01-2020', 300) }.to change { account.statement.transactions.length }.by 1
       expect(account.statement.transactions).to include(a_kind_of(Transaction))
       expect(account.statement.transactions[0].type).to eq('debit')
-      expect(account.statement.transactions[0].date).to eq('21/01/2020')
+      expect(account.statement.transactions[0].date).to eq('21-01-2020')
       expect(account.statement.transactions[0].amount).to eq(300)
     end
   end

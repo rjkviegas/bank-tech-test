@@ -5,7 +5,7 @@ class Transaction
 
   def initialize(type, date, amount, balance)
     @type = type
-    @date = date.gsub('-', '/')
+    @date = date
     @amount = amount
     @balance = balance
   end

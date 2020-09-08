@@ -18,11 +18,11 @@ class Statement
 
   private
 
-  def stringify(trans)
-    if trans.credit?
-      "#{trans.date} || #{trans.amount} || || #{trans.balance}"
-    elsif trans.debit?
-      "#{trans.date} || || #{trans.amount} || #{trans.balance}"
+  def stringify(transaction)
+    if transaction.credit?
+      "#{transaction.date.gsub('-', '/')} || #{transaction.amount} || || #{transaction.balance}"
+    elsif transaction.debit?
+      "#{transaction.date.gsub('-', '/')} || || #{transaction.amount} || #{transaction.balance}"
     end
   end
 end
