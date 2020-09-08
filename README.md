@@ -27,7 +27,7 @@ date || credit || debit || balance
 
 Clone this repository. Then:
 ```
-# RSpec for automated testing
+# RSpec for automated testing and SimpleCov for test coverage
 > bundle install
 ```
 
