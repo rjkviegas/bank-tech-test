@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'statement'
 require_relative 'transaction'
 
@@ -12,14 +14,12 @@ class Account
 
   def deposit(date, amount)
     @balance += amount
-    credit_transaction = @transaction_class.new('credit', date, amount, "#{balance}")
-    save(credit_transaction)
+    save(@transaction_class.new('credit', date, amount, balance.to_s))
   end
 
   def withdrawal(date, amount)
     @balance -= amount
-    debit_transaction = @transaction_class.new('debit', date, amount, "#{balance}")
-    save(debit_transaction)
+    save(@transaction_class.new('debit', date, amount, balance.to_s))
   end
 
   private

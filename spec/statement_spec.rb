@@ -1,10 +1,12 @@
-require "./lib/statement.rb"
+# frozen_string_literal: true
+
+require './lib/statement.rb'
 
 describe Statement do
   describe '#initialize' do
     it '#transactions' do
       statement = Statement.new
-      expect(statement).to have_attributes(:transactions => []) 
+      expect(statement).to have_attributes(transactions: [])
     end
   end
   describe '#add' do
@@ -18,35 +20,35 @@ describe Statement do
     end
   end
   describe '#print' do
-    it 'all transactions in reverse chronological order' do
+    it 'transactions in reverse-chronological order' do
       credit_double = double(
-        'transaction', 
-        :type => 'credit', 
-        :date => '20/01/2020', 
-        :amount => 500, 
-        :balance => 500,
+        'transaction',
+        type: 'credit',
+        date: '20/01/2020',
+        amount: 500,
+        balance: 500,
+        credit?: true,
+        debit?: false
       )
       debit_double = double(
-        'transaction', 
-        :type => 'debit', 
-        :date => '21/01/2020', 
-        :amount => 200, 
-        :balance => 300,
-        :credit? => true
+        'transaction',
+        type: 'debit',
+        date: '21/01/2020',
+        amount: 200,
+        balance: 300,
+        credit?: false,
+        debit?: true
       )
       statement = Statement.new
       allow(statement).to receive(:transactions) { [credit_double] }
-      allow(credit_double).to receive(:credit?) { true }
-      expect{ statement.show }.to output(
-        "date || credit || debit || balance\n" +
+      expect { statement.show }.to output(
+        "date || credit || debit || balance\n"\
         "20/01/2020 || 500 || || 500\n"
       ).to_stdout
       allow(statement).to receive(:transactions) { [credit_double, debit_double] }
-      allow(debit_double).to receive(:credit?) { false }
-      allow(debit_double).to receive(:debit?) { true }
-      expect{ statement.show }.to output(
-        "date || credit || debit || balance\n" +
-        "21/01/2020 || || 200 || 300\n" +
+      expect { statement.show }.to output(
+        "date || credit || debit || balance\n"\
+        "21/01/2020 || || 200 || 300\n"\
         "20/01/2020 || 500 || || 500\n"
       ).to_stdout
     end
