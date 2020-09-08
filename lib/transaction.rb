@@ -3,12 +3,10 @@ class Transaction
 
   def initialize(type, date, amount, balance)
     @type = type
-    @date = date
+    @date = date.gsub('-','/')
     @amount = amount
     @balance = balance
   end
-
-  private
 
   def credit?
     type == 'credit' ? true : false

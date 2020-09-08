@@ -23,6 +23,39 @@ date || credit || debit || balance
 10/01/2012 || 1000.00 || || 1000.00
 ```
 
-## Class Diagram
+## Set Up
 
-<img src="images/diagrams/classes.png">
+Clone this repository. Then:
+```
+# RSpec for automated testing
+> bundle install
+```
+
+## Testing
+
+### Automated Testing
+Move into root folder
+```
+rspec
+```
+### Manual Testing
+To test Acceptance Criteria move into root folder
+```
+> irb
+2.7.1 :001 > require './lib/account'
+ # => true 
+2.7.1 :002 > account = Account.new(Statement, Transaction)
+2.7.1 :003 > account.deposit('10-01-2012', 1000)
+ # => [#<Transaction:0x00007fb7589c8990 @type="credit", @date="10/01/2012", @amount=1000, @balance="1000">]
+2.7.1 :004 > account.deposit('13-01-2012', 2000)
+ # => [#<Transaction:0x00007fb7589c8990 @type="credit", @date="10/01/2012", @amount=1000, @balance="1000">, #<Transaction:0x00007fb758a3a090 @type="credit", @date="13/01/2012", @amount=2000, @balance="3000">]
+2.7.1 :005 > account.withdrawal('14-01-2012', 500)
+ # => [#<Transaction:0x00007fb7589c8990 @type="credit", @date="10/01/2012", @amount=1000, @balance="1000">, #<Transaction:0x00007fb758a3a090 @type="credit", @
+2.7.1 :006 > account.statement.show
+date || credit || debit || balance
+14/01/2012 || || 500 || 2500
+13/01/2012 || 2000 || || 3000
+10/01/2012 || 1000 || || 1000
+ # => [#<Transaction:0x00007fb75817ad88 @type="debit", @date="14/01/2012", @amount=500, @balance="2500">, #<Transaction:0x00007fb758a3a090 @type="credit", @date="13/01/2012", @amount=2000, @balance="3000">, #<Transaction:0x00007fb7589c8990 @type="credit", @date="10/01/2012", @amount=1000, @balance="1000">]
+2.7.1 :007 > exit
+```

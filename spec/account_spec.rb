@@ -1,4 +1,4 @@
-require '../lib/account.rb'
+require './lib/account.rb'
 
 describe Account do
   describe Account.new(Statement, Transaction) do

@@ -1,4 +1,4 @@
-require '../lib/transaction'
+require './lib/transaction'
 
 describe Transaction do
   describe '#initialization' do
@@ -9,7 +9,9 @@ describe Transaction do
       :date => '20/01/2020', 
       :amount => 500, 
       :balance => 1000
-    ) 
+    )
+    expect(credit_transaction.credit?).to be true
+    expect(credit_transaction.debit?).to be false
     end
     it 'debit transaction' do
       debit_transaction = Transaction.new('debit', '21/01/2020', 250, 750)
@@ -19,6 +21,8 @@ describe Transaction do
         :amount => 250, 
         :balance => 750
       ) 
+      expect(debit_transaction.credit?).to be false
+      expect(debit_transaction.debit?).to be true
       end
   end
 end
