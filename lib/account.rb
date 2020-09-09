@@ -14,12 +14,12 @@ class Account
 
   def deposit(amount)
     @balance += amount
-    save_to_statement(@transaction_class.new('credit', amount, balance))
+    save_to_statement(@transaction_class.new('credit', amount))
   end
 
   def withdrawal(amount)
     @balance -= amount
-    save_to_statement(@transaction_class.new('debit', amount, balance))
+    save_to_statement(@transaction_class.new('debit', amount))
   end
 
   private

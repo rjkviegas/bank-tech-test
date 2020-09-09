@@ -12,16 +12,21 @@ class Statement
   end
 
   def print_to_console
+    balances = balances_generator.reverse
     print statement_header + "\n"
-    transactions.reverse.each { |transaction| print transaction_row_formatter(transaction) + "\n" }
+    transactions.reverse.each_with_index do |transaction, i|
+      print transaction_row_formatter(transaction) +
+        ' || ' + balances[-i] + '.00' + "\n"
+    end
+    @current_balance = nil  
   end
 
   def balance_calculator(transaction)
     @current_balance ||= 0
     if transaction.debit? 
-      @current_balance += transaction.amount
-    elsif transaction.credit?
       @current_balance -= transaction.amount
+    elsif transaction.credit?
+      @current_balance += transaction.amount
     end
   end
 
@@ -38,6 +43,9 @@ class Statement
     elsif transaction.debit?
       row += '|| ' + transaction.amount.to_s + '.00'
     end
-    row + ' || ' + transaction.balance.to_s + '.00'
+  end
+
+  def balances_generator
+    transactions.map { |transaction| balance_calculator(transaction).to_s }
   end
 end
