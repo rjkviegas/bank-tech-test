@@ -17,7 +17,12 @@ class Statement
   end
 
   def balance_calculator(transaction)
-      500
+    @current_balance ||= 0
+    if transaction.debit? 
+      @current_balance += transaction.amount
+    elsif transaction.credit?
+      @current_balance -= transaction.amount
+    end
   end
 
   private
