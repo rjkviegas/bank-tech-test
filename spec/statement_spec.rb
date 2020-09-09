@@ -56,9 +56,10 @@ describe Statement do
     end
   end
   describe '#balance_calculator' do
-    it 'returns 0 when no transaction have been added' do
+    it 'returns 500 when it receives a debit transaction of 500' do
+      debit_double = double('transaction', amount: 500, debit?: true)
       statement = Statement.new
-      expect(statement.balance_calculator).to eq(0)
+      expect(statement.balance_calculator(debit_double)).to eq(500)
     end
   end
 end
