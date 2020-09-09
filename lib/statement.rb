@@ -11,18 +11,24 @@ class Statement
     transactions << transaction
   end
 
-  def show
-    puts 'date || credit || debit || balance'
-    transactions.reverse.each { |tr| puts stringify(tr) }
+  def print_to_console
+    print statement_header + "\n"
+    transactions.reverse.each { |transaction| print (transaction_row_formatter(transaction) + "\n") }
   end
 
   private
 
-  def stringify(transaction)
+  def statement_header
+    'date || credit || debit || balance'
+  end
+
+  def transaction_row_formatter(transaction)
+    row = transaction.date +  ' || '
     if transaction.credit?
-      "#{transaction.date.gsub('-', '/')} || #{transaction.amount} || || #{transaction.balance}"
+      row += transaction.amount.to_s + '.00' + ' ||'
     elsif transaction.debit?
-      "#{transaction.date.gsub('-', '/')} || || #{transaction.amount} || #{transaction.balance}"
+      row += '|| ' + transaction.amount.to_s + '.00'
     end
+    row += ' || ' + transaction.balance.to_s + '.00'
   end
 end

@@ -19,12 +19,14 @@ describe Statement do
       expect(statement.transactions.first).to eq(transaction_double)
     end
   end
-  describe '#print' do
+  describe '#print_to_console' do
+    let(:time_double) { double('time_double', strftime: '20/01/2020') }
     it 'transactions in reverse-chronological order' do
+      allow(Time).to receive(:now) { time_double }
       credit_double = double(
         'transaction',
         type: 'credit',
-        date: '20/01/2020',
+        date: time_double.strftime,
         amount: 500,
         balance: 500,
         credit?: true,
@@ -33,7 +35,7 @@ describe Statement do
       debit_double = double(
         'transaction',
         type: 'debit',
-        date: '21/01/2020',
+        date: time_double.strftime,
         amount: 200,
         balance: 300,
         credit?: false,
@@ -41,15 +43,15 @@ describe Statement do
       )
       statement = Statement.new
       allow(statement).to receive(:transactions) { [credit_double] }
-      expect { statement.show }.to output(
+      expect { statement.print_to_console }.to output(
         "date || credit || debit || balance\n"\
-        "20/01/2020 || 500 || || 500\n"
+        "20/01/2020 || 500.00 || || 500.00\n"
       ).to_stdout
       allow(statement).to receive(:transactions) { [credit_double, debit_double] }
-      expect { statement.show }.to output(
+      expect { statement.print_to_console }.to output(
         "date || credit || debit || balance\n"\
-        "21/01/2020 || || 200 || 300\n"\
-        "20/01/2020 || 500 || || 500\n"
+        "20/01/2020 || || 200.00 || 300.00\n"\
+        "20/01/2020 || 500.00 || || 500.00\n"
       ).to_stdout
     end
   end
