@@ -11,7 +11,7 @@ describe Transaction do
       expect(credit_transaction).to have_attributes(
         type: 'credit',
         date: time_double.strftime,
-        amount: 500,
+        amount: 500
       )
       expect(credit_transaction.credit?).to be true
       expect(credit_transaction.debit?).to be false
@@ -22,7 +22,7 @@ describe Transaction do
       expect(debit_transaction).to have_attributes(
         type: 'debit',
         date: time_double.strftime,
-        amount: 250,
+        amount: 250
       )
       expect(debit_transaction.credit?).to be false
       expect(debit_transaction.debit?).to be true

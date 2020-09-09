@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Statement
+  STATEMENT_HEADER = "date || credit || debit || balance\n"
+
   attr_reader :transactions
 
   def initialize
@@ -12,40 +14,36 @@ class Statement
   end
 
   def print_to_console
-    balances = balances_generator.reverse
-    print statement_header + "\n"
-    transactions.reverse.each_with_index do |transaction, i|
-      print transaction_row_formatter(transaction) +
-        ' || ' + balances[-i] + '.00' + "\n"
+    balances_array = balances_generator
+    print STATEMENT_HEADER
+    transactions.reverse.each_with_index do |transaction, index|
+      print row_formatter(transaction) + balances_array[index] + ".00\n"
     end
-    @current_balance = nil  
+    @current_balance = nil
+  end
+
+  private
+
+  def row_formatter(transaction)
+    row = transaction.date + ' || '
+    if transaction.credit?
+      row += transaction.amount.to_s + '.00 ||'
+    elsif transaction.debit?
+      row += '|| ' + transaction.amount.to_s + '.00'
+    end
+    row + ' || '
   end
 
   def balance_calculator(transaction)
     @current_balance ||= 0
-    if transaction.debit? 
+    if transaction.debit?
       @current_balance -= transaction.amount
     elsif transaction.credit?
       @current_balance += transaction.amount
     end
   end
 
-  private
-
-  def statement_header
-    'date || credit || debit || balance'
-  end
-
-  def transaction_row_formatter(transaction)
-    row = transaction.date + ' || '
-    if transaction.credit?
-      row += transaction.amount.to_s + '.00' + ' ||'
-    elsif transaction.debit?
-      row += '|| ' + transaction.amount.to_s + '.00'
-    end
-  end
-
   def balances_generator
-    transactions.map { |transaction| balance_calculator(transaction).to_s }
+    transactions.map { |transaction| balance_calculator(transaction).to_s }.reverse
   end
 end

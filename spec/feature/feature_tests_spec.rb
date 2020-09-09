@@ -3,7 +3,6 @@
 require './lib/account.rb'
 
 describe 'Feature Tests' do
-
   describe Account.new(Statement, Transaction) do
     it { is_expected.to have_attributes(balance: 0) }
     it { is_expected.to have_attributes(statement: an_instance_of(Statement)) }
@@ -11,7 +10,6 @@ describe 'Feature Tests' do
   end
 
   describe 'Account' do
-    
     describe '#deposit' do
       let(:time_double) { double('time_double', strftime: '20/01/2020') }
       let(:account) { Account.new(Statement, Transaction) }
@@ -51,7 +49,6 @@ describe 'Feature Tests' do
   end
 
   describe 'Statement' do
-    
     describe '#print_to_console' do
       let(:time_double) { double('time_double', strftime: '20/01/2020') }
       let(:account) { Account.new(Statement, Transaction) }

@@ -1,1 +1,3 @@
 coverage
+/lib/statement_printer.rb
+/spec/statement_printer_spec.rb

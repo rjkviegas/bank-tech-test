@@ -51,39 +51,4 @@ describe Statement do
       ).to_stdout
     end
   end
-  describe '#balance_calculator' do
-      it 'returns positive transaction amount when it receives a credit transaction' do
-        credit_double = double('transaction', amount: 500, debit?: false, credit?: true)
-        statement = Statement.new
-        expect(statement.balance_calculator(credit_double)).to eq(credit_double.amount)
-      end
-
-      it 'returns negative transaction amount when it receives a debit transaction' do
-        debit_double = double('transaction', amount: 500, debit?: true, credit?: false)
-        statement = Statement.new
-        expect(statement.balance_calculator(debit_double)).to eq(-debit_double.amount)
-      end
-
-    describe 'more than one transaction' do
-
-      let(:debit_double) { double('transaction', amount: 500, debit?: true, credit?: false) }
-      let(:credit_double) { double('transaction', amount: 200, debit?: false, credit?: true) }
-      let(:statement) { Statement.new }
-
-      it 'returns sum of amounts when it receives two debit transactions' do
-        expect(statement.balance_calculator(debit_double)).to eq(-debit_double.amount)
-        expect(statement.balance_calculator(debit_double)).to eq(-2*debit_double.amount)
-      end
-
-      it 'returns sum of amounts when it receives a two credit transactions' do
-        expect(statement.balance_calculator(credit_double)).to eq(credit_double.amount)
-        expect(statement.balance_calculator(credit_double)).to eq(2*credit_double.amount)
-      end
-
-      it 'returns difference in amounts when it receives a credit transaction and then a debit transaction' do
-        expect(statement.balance_calculator(credit_double)).to eq(credit_double.amount)
-        expect(statement.balance_calculator(debit_double)).to eq(credit_double.amount - debit_double.amount)
-      end
-    end
-  end
 end
