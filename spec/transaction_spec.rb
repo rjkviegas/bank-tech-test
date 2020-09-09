@@ -4,11 +4,13 @@ require './lib/transaction'
 
 describe Transaction do
   describe '#initialization' do
+    let(:timeDouble) { double('timeDouble', strftime: '20/01/2020') }
     it 'credit transaction' do
-      credit_transaction = Transaction.new('credit', '20-01-2020', 500, 1000)
+      allow(Time).to receive(:now) {timeDouble}
+      credit_transaction = Transaction.new('credit', 500, 1000)
       expect(credit_transaction).to have_attributes(
         type: 'credit',
-        date: '20-01-2020',
+        date: timeDouble.strftime,
         amount: 500,
         balance: 1000
       )
@@ -16,10 +18,11 @@ describe Transaction do
       expect(credit_transaction.debit?).to be false
     end
     it 'debit transaction' do
-      debit_transaction = Transaction.new('debit', '21-01-2020', 250, 750)
+      allow(Time).to receive(:now) {timeDouble}
+      debit_transaction = Transaction.new('debit', 250, 750)
       expect(debit_transaction).to have_attributes(
         type: 'debit',
-        date: '21-01-2020',
+        date: timeDouble.strftime,
         amount: 250,
         balance: 750
       )
