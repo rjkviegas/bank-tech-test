@@ -5,7 +5,7 @@ class Transaction
 
   def initialize(type, amount, balance)
     @type = type
-    @date = Time.now.strftime("%d/%m/%Y")
+    @date = Time.now.strftime('%d/%m/%Y')
     @amount = amount
     @balance = balance
   end
