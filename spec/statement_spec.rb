@@ -55,4 +55,10 @@ describe Statement do
       ).to_stdout
     end
   end
+  describe '#balance_calculator' do
+    it 'returns 0 when no transaction have been added' do
+      statement = Statement.new
+      expect(statement.balance_calculator).to eq(0)
+    end
+  end
 end

@@ -16,6 +16,10 @@ class Statement
     transactions.reverse.each { |transaction| print transaction_row_formatter(transaction) + "\n" }
   end
 
+  def balance_calculator
+    0
+  end
+
   private
 
   def statement_header
