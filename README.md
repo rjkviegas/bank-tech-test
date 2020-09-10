@@ -42,20 +42,21 @@ rspec
 To test Acceptance Criteria move into root folder
 ```
 > irb
+student@MacBook-Air bank-tech-test % irb
 2.7.1 :001 > require './lib/account'
- # => true 
+ => true 
 2.7.1 :002 > account = Account.new(Statement, Transaction)
-2.7.1 :003 > account.deposit('10-01-2012', 1000)
- # => [#<Transaction:0x00007fb7589c8990 @type="credit", @date="10/01/2012", @amount=1000, @balance="1000">]
-2.7.1 :004 > account.deposit('13-01-2012', 2000)
- # => [#<Transaction:0x00007fb7589c8990 @type="credit", @date="10/01/2012", @amount=1000, @balance="1000">, #<Transaction:0x00007fb758a3a090 @type="credit", @date="13/01/2012", @amount=2000, @balance="3000">]
-2.7.1 :005 > account.withdrawal('14-01-2012', 500)
- # => [#<Transaction:0x00007fb7589c8990 @type="credit", @date="10/01/2012", @amount=1000, @balance="1000">, #<Transaction:0x00007fb758a3a090 @type="credit", @
-2.7.1 :006 > account.statement.show
+2.7.1 :003 > account.deposit(1000)
+ => [#<Transaction:0x00007fe4a233a318 @type="credit", @date="10/09/2020", @amount=1000>] 
+2.7.1 :004 > account.deposit(2000)
+ => [#<Transaction:0x00007fe4a233a318 @type="credit", @date="10/09/2020", @amount=1000>, #<Transaction:0x00007fe4a23303e0 @type="credit", @date="10/09/2020", @amount=2000>] 
+2.7.1 :005 > account.withdrawal(500)
+ => [#<Transaction:0x00007fe4a233a318 @type="credit", @date="10/09/2020", @amount=1000>, #<Transaction:0x00007fe4a23303e0 @type="credit", @date="10/09/2020", @amount=2000>, #<Transaction:0x00007fe4a2300500 @type="debit", @date="10/09/2020", @amount=500>] 
+2.7.1 :006 > account.statement.print_to_console
 date || credit || debit || balance
-14/01/2012 || || 500 || 2500
-13/01/2012 || 2000 || || 3000
-10/01/2012 || 1000 || || 1000
- # => [#<Transaction:0x00007fb75817ad88 @type="debit", @date="14/01/2012", @amount=500, @balance="2500">, #<Transaction:0x00007fb758a3a090 @type="credit", @date="13/01/2012", @amount=2000, @balance="3000">, #<Transaction:0x00007fb7589c8990 @type="credit", @date="10/01/2012", @amount=1000, @balance="1000">]
+10/09/2020 || || 500.00 || 2500.00
+10/09/2020 || 2000.00 || || 3000.00
+10/09/2020 || 1000.00 || || 1000.00
+ => nil 
 2.7.1 :007 > exit
 ```

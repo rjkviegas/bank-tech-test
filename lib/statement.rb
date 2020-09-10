@@ -14,17 +14,18 @@ class Statement
   end
 
   def print_to_console
-    balances_array = balances_generator
+    transaction_in_reverse_chronological_order = transactions.reverse
+    balances_in_reverse_chronological_order = generate_balances_array.reverse
     print STATEMENT_HEADER
-    transactions.reverse.each_with_index do |transaction, index|
-      print row_formatter(transaction) + balances_array[index] + ".00\n"
+    transaction_in_reverse_chronological_order.each_with_index do |transaction, index|
+      print format_row(transaction) + balances_in_reverse_chronological_order[index] + ".00\n"
     end
     @current_balance = nil
   end
 
   private
 
-  def row_formatter(transaction)
+  def format_row(transaction)
     row = transaction.date + ' || '
     if transaction.credit?
       row += transaction.amount.to_s + '.00 ||'
@@ -34,7 +35,7 @@ class Statement
     row + ' || '
   end
 
-  def balance_calculator(transaction)
+  def calculate_current_balance(transaction)
     @current_balance ||= 0
     if transaction.debit?
       @current_balance -= transaction.amount
@@ -43,7 +44,7 @@ class Statement
     end
   end
 
-  def balances_generator
-    transactions.map { |transaction| balance_calculator(transaction).to_s }.reverse
+  def generate_balances_array
+    transactions.map { |transaction| calculate_current_balance(transaction).to_s }
   end
 end
