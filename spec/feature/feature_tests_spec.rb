@@ -59,11 +59,22 @@ describe 'Feature Tests' do
         ).to_stdout
       end
 
-      it 'prints header and row after deposit' do
+      it 'prints correct statement after a deposit' do
         allow(Time).to receive(:now) { time_double }
         account.deposit(500)
         expect { account.statement.print_to_console }.to output(
           "date || credit || debit || balance\n"\
+          "20/01/2020 || 500.00 || || 500.00\n"
+        ).to_stdout
+      end
+
+      it 'prints correct statement after 2 deposits t' do
+        allow(Time).to receive(:now) { time_double }
+        account.deposit(500)
+        account.deposit(300)
+        expect { account.statement.print_to_console }.to output(
+          "date || credit || debit || balance\n"\
+          "20/01/2020 || 300.00 || || 800.00\n"\
           "20/01/2020 || 500.00 || || 500.00\n"
         ).to_stdout
       end
